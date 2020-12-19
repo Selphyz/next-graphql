@@ -10,6 +10,10 @@ export class Stream {
 
   @Field()
   @prop({ required: true })
+  title: string;
+
+  @Field()
+  @prop({ required: true })
   description: string;
 
   @Field()
@@ -20,4 +24,4 @@ export class Stream {
   @prop({ ref: User, required: true })
   author: Ref<User>;
 }
-export const StreamModel = getModelForClass(User);
+export const StreamModel = getModelForClass(Stream);
