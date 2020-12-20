@@ -1,4 +1,3 @@
-import { ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
-export type Ref<G> = G | ObjectID;
-export default Ref;
+export type Ref<T> = T | ObjectId;

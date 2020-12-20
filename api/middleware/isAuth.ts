@@ -1,17 +1,18 @@
-import jwt from 'jsonwebtoken';
 import { MiddlewareFn } from 'type-graphql';
-import MyContext from '../types/MyContext';
+import { ApolloError } from 'apollo-server-core';
+import { MyContext } from '../types/MyContext';
+import jwt from 'jsonwebtoken';
 
-const APP_SECRET = process.env.SESSION_SECRET || 'sdfgggrtgm56j';
+const APP_SECRET = process.env.SESSION_SECRET || 'aslkdfjoiq12312';
 
 export const isAuth: MiddlewareFn<MyContext> = async ({ context }, next) => {
-  const authoritation = context.req.headers['authorization'];
+  const authorization = context.req.headers['authorization'];
   try {
-    const token = authoritation?.replace('Bearer', '');
-    const user = jwt.verify(token!, APP_SECRET) as any;
+    const token = authorization?.replace('Bearer ', '')!;
+    const user = jwt.verify(token, APP_SECRET) as any;
     context.res.locals.userId = user.id;
     return next();
-  }catch(err){
-    throw new Error(err.message);
+  } catch (err) {
+    throw new ApolloError(err.message);
   }
 };

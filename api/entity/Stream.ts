@@ -1,27 +1,29 @@
-import { getModelForClass, prop } from '@typegoose/typegoose';
-import { ObjectId } from 'mongoose';
+import { prop as Property, getModelForClass } from '@typegoose/typegoose';
+import { ObjectId } from 'mongodb';
 import { Field, ObjectType } from 'type-graphql';
-import { Ref } from 'types/Ref';
 import { User } from './User';
+import { Ref } from '../types/Ref';
 
-@ObjectType({ description: 'Stream de contenido' })
+@ObjectType()
 export class Stream {
-  @Field() readonly _id: ObjectId;
+  @Field()
+  readonly _id: ObjectId;
 
   @Field()
-  @prop({ required: true })
+  @Property({ required: true })
   title: string;
 
   @Field()
-  @prop({ required: true })
+  @Property({ required: true })
   description: string;
 
   @Field()
-  @prop({ required: true })
+  @Property({ required: true })
   url: string;
 
-  @Field()
-  @prop({ ref: User, required: true })
+  @Field(() => User)
+  @Property({ ref: User, required: true })
   author: Ref<User>;
 }
+
 export const StreamModel = getModelForClass(Stream);
