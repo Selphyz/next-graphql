@@ -36,10 +36,41 @@ export class StreamResolver {
       ...streamInput,
       author: ctx.res.locals.userId,
     } as Stream);
-
     await stream.save();
-
     return stream;
+  }
+  @Mutation(() => Stream)
+  @UseMiddleware(isAuth)
+  async editStream(@Arg('input') streamInput: StreamInput, @Ctx() ctx: MyContext): Promise<Stream> {
+    const { id, title, description, url } = streamInput;
+    const stream = await StreamModel.findOneAndUpdate(
+      { _id: id, author: ctx.res.locals.userId },
+      {
+        title,
+        description,
+        url,
+      },
+      { runValidators: true, new: true },
+    );
+    if (!stream) {
+      throw new Error('Stream not found');
+    }
+    return stream;
+  }
+  @Mutation(() => Stream)
+  @UseMiddleware(isAuth)
+  async deleteStream(
+    @Arg('streamId', () => ObjectIdScalar) streamId: ObjectId,
+    @Ctx() ctx: MyContext,
+  ): Promise<boolean | undefined> {
+    const deleted = await StreamModel.findOneAndUpdate(
+      { _id: streamId },
+      { author: ctx.res.locals.userId },
+    );
+    if (!deleted) {
+      throw new Error('Stream not found');
+    }
+    return true;
   }
 
   @FieldResolver()

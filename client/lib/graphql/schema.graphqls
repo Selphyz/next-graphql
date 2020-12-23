@@ -15,8 +15,6 @@ type FieldError {
 
 type Mutation {
   addStream(input: StreamInput!): Stream!
-  deleteStream(streamId: ObjectId!): Stream!
-  editStream(input: StreamInput!): Stream!
   login(input: AuthInput!): UserResponse!
   logout: Boolean!
   register(input: AuthInput!): UserResponse!
@@ -42,7 +40,6 @@ type Stream {
 
 input StreamInput {
   description: String
-  id: ObjectId
   title: String!
   url: String
 }
