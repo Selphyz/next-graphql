@@ -1,5 +1,5 @@
 mutation EditStream($input: StreamInput!) {
-  addStream(input: $input) {
+  editStream(input: $input) {
     _id
     title
     description

@@ -1,6 +1,5 @@
 import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import jwt from 'jsonwebtoken';
-
 import { UserModel } from '../entity/User';
 import { AuthInput } from '../types/AuthInput';
 import { MyContext } from '../types/MyContext';

@@ -1,7 +1,7 @@
 import { MiddlewareFn } from 'type-graphql';
 import { ApolloError } from 'apollo-server-core';
-import { MyContext } from '../types/MyContext';
 import jwt from 'jsonwebtoken';
+import { MyContext } from '../types/MyContext';
 
 const APP_SECRET = process.env.SESSION_SECRET || 'aslkdfjoiq12312';
 

@@ -1,0 +1,61 @@
+import {
+  Typography,
+  Grid,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Hidden,
+} from '@material-ui/core';
+import Link from 'next/link';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Stream } from '../generated/graphql';
+
+interface IPosts {
+  streams: Stream[];
+}
+const useStyles = makeStyles((theme: Theme) => ({
+  container: { marginTop: theme.spacing(4) },
+  card: { display: 'flex' },
+  cardDetails: { flex: 1 },
+  cardMedia: { width: 100 },
+}));
+export const Post: React.FC<IPosts> = ({ streams }) => {
+  const styles = useStyles();
+  return (
+    <Grid container className={styles.container} spacing={4}>
+      {streams.map((post) => (
+        <Grid item key={post._id} xs={12} md={6}>
+          <Link href={`/streams/${post._id}`}>
+            <CardActionArea component='a' href='#'>
+              <Card className={styles.card}>
+                <div className={styles.cardDetails}>
+                  <CardContent>
+                    <Typography component='h2' variant='h5'>
+                      {post.title}
+                    </Typography>
+                    <Typography color='textSecondary' variant='subtitle1'>
+                      {post.url}
+                    </Typography>
+                    <Typography component='h2' paragraph>
+                      {post.description}
+                    </Typography>
+                  </CardContent>
+                </div>
+                <Hidden xsDown>
+                  <CardMedia
+                    className={styles.cardMedia}
+                    image='https://source.unsplash.com/random'
+                    title='Image title'
+                  />
+                </Hidden>
+              </Card>
+            </CardActionArea>
+          </Link>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+
+export default Post;

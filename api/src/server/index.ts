@@ -13,38 +13,33 @@ async function createServer() {
     const session = await createSession();
     const app = express();
 
-    // allow CORS from client app
-    app.use(
-      cors({
-        origin: 'http://localhost:3000',
-        credentials: true,
-      }),
-    );
-    // allow JSON requests
-    app.use(express.json());
-    // use MongoDB session
+    // app.use(cors());
     app.use(session);
-
+    app.use(express.json());
+    app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
     const schema = await createSchema();
-
-    // create GraphQL server
     const apolloServer = new ApolloServer({
       schema,
       context: ({ req, res }) => ({ req, res }),
       introspection: true,
-      // enable GraphQL Playground
       playground: {
         settings: {
           'request.credentials': 'include',
         },
       },
     });
+    const corsOptions = {
+      origin: 'http://localhost:3000',
+      credentials: true,
+    };
 
-    apolloServer.applyMiddleware({ app, cors: true });
+    apolloServer.applyMiddleware({
+      app,
+      cors: corsOptions,
+    });
 
-    // start the server
     app.listen({ port }, () => {
-      console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`);
+      console.log(`Server ready at http://localhost:${port}${apolloServer.graphqlPath}`);
     });
   } catch (err) {
     console.log(err);

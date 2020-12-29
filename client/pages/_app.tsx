@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/apollo';
 import { themeDark, themeLight } from '../lib/theme';
+import { AuthProvider } from '../lib/useAuth';
+import { Header } from '../components/Header';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -23,7 +25,10 @@ export default function MyApp(props) {
     <ApolloProvider client={apolloClient}>
       <ThemeProvider theme={darkState ? themeDark : themeLight}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <AuthProvider>
+          <Header darkState={darkState} handleThemeChange={handleThemeChange} />
+          <Component {...pageProps} />
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

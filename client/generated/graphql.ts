@@ -142,7 +142,7 @@ export type EditStreamMutationVariables = Exact<{
 
 export type EditStreamMutation = (
   { __typename?: 'Mutation' }
-  & { addStream: (
+  & { editStream: (
     { __typename?: 'Stream' }
     & Pick<Stream, '_id' | 'title' | 'description' | 'url'>
   ) }
@@ -166,13 +166,13 @@ export type SignInMutation = (
   ) }
 );
 
-export type SingUpMutationVariables = Exact<{
+export type SignUpMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
 
-export type SingUpMutation = (
+export type SignUpMutation = (
   { __typename?: 'Mutation' }
   & { register: (
     { __typename?: 'UserResponse' }
@@ -298,7 +298,7 @@ export type DeleteStreamMutationResult = Apollo.MutationResult<DeleteStreamMutat
 export type DeleteStreamMutationOptions = Apollo.BaseMutationOptions<DeleteStreamMutation, DeleteStreamMutationVariables>;
 export const EditStreamDocument = gql`
     mutation EditStream($input: StreamInput!) {
-  addStream(input: $input) {
+  editStream(input: $input) {
     _id
     title
     description
@@ -368,8 +368,8 @@ export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignI
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
 export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
-export const SingUpDocument = gql`
-    mutation SingUp($email: String!, $password: String!) {
+export const SignUpDocument = gql`
+    mutation SignUp($email: String!, $password: String!) {
   register(input: {email: $email, password: $password}) {
     user {
       _id
@@ -379,32 +379,32 @@ export const SingUpDocument = gql`
   }
 }
     `;
-export type SingUpMutationFn = Apollo.MutationFunction<SingUpMutation, SingUpMutationVariables>;
+export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
 
 /**
- * __useSingUpMutation__
+ * __useSignUpMutation__
  *
- * To run a mutation, you first call `useSingUpMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSingUpMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSignUpMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignUpMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [singUpMutation, { data, loading, error }] = useSingUpMutation({
+ * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
  *   variables: {
  *      email: // value for 'email'
  *      password: // value for 'password'
  *   },
  * });
  */
-export function useSingUpMutation(baseOptions?: Apollo.MutationHookOptions<SingUpMutation, SingUpMutationVariables>) {
-        return Apollo.useMutation<SingUpMutation, SingUpMutationVariables>(SingUpDocument, baseOptions);
+export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
+        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, baseOptions);
       }
-export type SingUpMutationHookResult = ReturnType<typeof useSingUpMutation>;
-export type SingUpMutationResult = Apollo.MutationResult<SingUpMutation>;
-export type SingUpMutationOptions = Apollo.BaseMutationOptions<SingUpMutation, SingUpMutationVariables>;
+export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
+export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
 export const CurrentUserDocument = gql`
     query CurrentUser {
   currentUser {

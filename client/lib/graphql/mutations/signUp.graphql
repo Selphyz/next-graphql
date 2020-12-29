@@ -1,4 +1,4 @@
-mutation SingUp($email: String!, $password: String!) {
+mutation SignUp($email: String!, $password: String!) {
   register(input: { email: $email, password: $password }) {
     user {
       _id
